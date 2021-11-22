@@ -1,0 +1,55 @@
+<%- include("../pages/header") %>
+
+<div class="row">
+    <div class="col-md-12 col-sm-6">
+        <div class="portlet light bordered">
+            <div class="portlet-title tabbable-line">
+                <div class="caption">
+                    <i class="icon-bubbles font-red"></i>
+                    <span class="caption-subject font-red bold uppercase">Profil </span>mail =  <%= email %> 
+                </div>
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#portlet_comments_1" data-toggle="tab"> apropos </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="portlet-body">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="portlet_comments_1">
+                        <!-- BEGIN: Comments -->
+                        <div class="mt-comments">
+                            <div class="mt-comment">
+                                <div class="mt-comment-img">
+                                    <img src="../assets/pages/media/users/avatar1.jpg" /> </div>
+                                <div class="mt-comment-body">
+                                    <div class="mt-comment-info">
+                                    <span class="mt-comment-author">Nom : <strong> <i><%= username %></i> </strong> </span>
+                                        <span class="mt-comment-date">Uranus</span>
+                                    </div>
+                                    <div class="mt-comment-text"> Prenom : <strong><i><%= lastname %></i></strong> </div>
+                                    <div class="mt-comment-text"> contact : <strong><i><%= contact %></i></strong> </div>
+                                    <div class="mt-comment-details">
+                                    <strong><i><%= type %></i></strong>
+                                        <span class="mt-comment-status mt-comment-status-pending">Role: </span>
+                                        <ul class="mt-comment-actions">
+                                            <li>
+                                                <a style="color:blue" href="#"> <i>Email</i>  =</a>
+                                            </li>
+                                            <li>
+                                                <a style="color:red" href="#"><strong><em>  <%= email %></em> </strong></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END: Comments -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+</div>
+<%- include("../pages/footer") %>
