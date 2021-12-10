@@ -1,24 +1,54 @@
-DB_USERNAME=cvbshopmg_mamizara
-DB_PASSWORD=123456789uranus!
-DB_DATABASE=cvbshopmg_uranus
-DB_HOST=144.91.112.39
-DB_DIALECT=mysql
+const express = require('express');
+const app = express()
+const pdf=require('html-pdf');
+const ejs=require('ejs')
+app.use(express.json());
 
+app.get('/pdf',(req, res)=>{
 
-secret_key="DONT SAY"    
+    ejs.renderFile("./to.ejs", {name:"mandeh"},(err, html)=>{
+        if(err){
+            return res.status(500).json({message:'hello'})
+        }
+        const option={
+            format:'A4',
+            border:{
+                right:'8'
+            }
+        }
+    pdf.create(html, option).toFile('./uploads/kl.pdf',(error, response)=>{
+        if(!err){
+            res.json({message:'pdf generate'})
+        }else{
+            res.json({message:'ts mety'})
+        }
+    })
 
+    })
+})
 
+app.get('/download', (req, res)=>{
+    res.type('pdf');
+    res.download('./uploads/kl.pdf')
+})
 
-require('dotenv').config();
+app.listen(3333, ()=>{
+    console.log('mandeha')
+})
 
-module.exports={
-  username:process.env.DB_USERNAME || "cvbshopmg_mamizara",
-  password:process.env.DB_PASSWORD || "123456789uranus!",
-  database:process.env.DB_DATABASE || "cvbshopmg_uranus",
-  host:process.env.DB_HOST || "144.91.112.39",
-  dialect: process.env.DB_DIALECT|| "mysql",
-  define:{
-    timestamps:false,
-    underscored:true,
-  }
-}
+       
+       <section class="fh5co-social">
+        <div class="site-container">
+            <div class="social">
+                <div class="social-icons">
+                    <a href="<?= base_url()?>welcome" ><i class="bi bi-house-fill"></i></a>
+                    <a href="<?= base_url()?>welcome/cv" ><img src="<?= base_url()?>assets/images/social-pinterest.png" alt="social icon"></a>
+                    <a href="<?= base_url()?>welcome/experience" ><img src="<?= base_url()?>assets/images/social-pinterest.png" alt="social icon"></a>
+                    <a href="<?= base_url()?>welcome/contact" ><img src="<?= base_url()?>assets/images/social-pinterest.png" alt="social icon"></a>
+                    <a href="<?= base_url()?>welcome/apropos" ><img src="<?= base_url()?>assets/images/social-pinterest.png" alt="social icon"></a>
+                
+                </div>
+                <h5>Merci de votre visite</h5>
+            </div>
+        </div>
+    </section>

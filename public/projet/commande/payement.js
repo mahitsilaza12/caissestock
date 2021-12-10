@@ -1,7 +1,7 @@
 new Vue({
     el:"#payement",
     data:{
-        website:'/payementclis/',
+        website:'http://localhost:8091/payementclis/',
         liste:{},
         idSuppre:"",
 
@@ -12,14 +12,14 @@ new Vue({
         idEdit:"",
 
         // commande
-        listePanier : "/commandeliste",
+        listePanier : "http://localhost:8091/commandeliste",
 
         // payement
         payee:"",
         net:"",
         date_echeance:"",
         datepayement:"",
-        listefarany:"/compay"
+        listefarany:"http://localhost:8091/compay"
 
 
 

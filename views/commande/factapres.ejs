@@ -1,0 +1,107 @@
+<%- include("../pages/header") %>
+<div id="paycom">
+<div class="row">
+    <div class="col-md-6">
+        <!-- BEGIN SAMPLE TABLE PORTLET-->
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-comments"></i>Payement </div>
+                <div class="tools">
+                    <a href="javascript:;" class="remove"> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+            <!-- <form role="form"> -->
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label>Payement</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-user"></i>
+                                </span>
+                                <input type="number" v-model="payee" class="form-control input-circle-right"  placeholder="Ariary"> </div>
+                                <p style="color: #fc0612;">
+                                </p>
+                            </div>
+                        <div class="form-group">
+                            <label>Date de payement</label>
+                            <div class="input-group">
+                                <span class="input-group-addon input-circle-left">
+                                    <i class="fa fa-envelope"></i>
+                                </span>
+                                <input type="date"  v-model="datepayement" class="form-control input-circle-right" placeholder="date de debut"> </div>
+                                <p style="color: #fc0612;">
+                                </p>
+                            </div>
+                        <div class="form-group">
+                            <label>Date de reste</label>
+                            <div class="input-group">
+                                <span class="input-group-addon input-circle-left">
+                                    <i class="fa fa-phone"></i>
+                                </span>
+                                <input type="date"  v-model="dateEcheance" class="form-control input-circle-right" placeholder="fin de payement"> </div>
+                                <p style="color: #fc0612;">
+                                </p>
+                            </div>
+                        
+                    </div>
+                   
+                    <div class="form-actions">
+                            
+                        <a  @click.prevent="payer" href="/historiquepayement">
+                            <button  class="btn blue"><i class="fa fa-save"></i> <span>payee </span></button>
+                        </a>
+                    </div>
+                <!-- </form> -->
+            </div>
+        </div>
+        <!-- END SAMPLE TABLE PORTLET-->
+    </div>
+    <div class="col-md-6">
+        <!-- BEGIN CONDENSED TABLE PORTLET-->
+        <div class="portlet box yellow">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture"></i>Liste de produit commande </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                    <a href="javascript:;" class="remove"> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th> intrants </th>
+                                <th>nom produit </th>
+                                <th> Unite </th>
+                                <th> qt </th>
+                                <th> type </th>
+                                <th> Prix </th>
+                                <th>Sous-total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="test in liste" :key="test.id">
+                                <td> {{test.cli}} </td>
+                                <td> {{test.category}} </td>
+                                </tr>
+                            
+                        </tbody>
+                      
+                    </table>
+          
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<%- include("../pages/footer",{
+    script:`
+    <script src="../assets/projet/commande/factapres.js"></script>
+    `
+}) %>

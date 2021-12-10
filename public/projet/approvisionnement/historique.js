@@ -1,7 +1,7 @@
 new Vue({
     el:"#histo",
     data:{
-        website:'/affichageappro/',
+        website:'http://localhost:8091/affichageappro/',
         liste:{},
     },
     methods:{

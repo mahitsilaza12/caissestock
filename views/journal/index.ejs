@@ -56,7 +56,6 @@
                 <table id="commexcel" class="table table-striped table-bordered table-hover table-checkable order-column">
                     <thead>
                         <tr>
-                             <th> Numéro de facture </th>
                             <th> client </th>
                             <th> intrants </th>
                             <th> produits </th>
@@ -71,7 +70,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr  v-for="commande in cli" :key="commande.id" class="odd gradeX">
+                        <tr  v-for="commande in cli"  class="odd gradeX">
                             <td>
                                 <a href="/"> {{commande.id}} </a>
                             </td>
@@ -159,7 +158,11 @@
                         </div>
                         
                         <button type="button" class="btn btn-primary" @click="depe"><i class="fa fa-calendar"></i> Afficher</button>
-                     </form>
+                        <input type="text" @input="search" v-model="searchproduit"  class="form-control" placeholder="recherch..." >
+                      
+                    <a  class="btn btn-success btn-sm">
+                        <i class="fa fa-search"></i> Recherch </a>
+                    </form>
                 <div class="portlet box blue">
             <div class="portlet-title">
                 <div class="caption">
@@ -186,7 +189,7 @@
                     </thead>
                     <tbody>
                            
-                        <tr v-for="depense in liste" :key="depense.id"  class="odd gradeX">
+                        <tr v-for="depense in liste"   class="odd gradeX">
                       
                             <td>
                                 <a> {{depense.id}} </a>
@@ -245,7 +248,11 @@
                         </div>
                         
                         <button type="button" @click="appro" class="btn btn-primary"><i class="fa fa-calendar"></i> Afficher</button>
-                     </form>
+                        <input type="text" @input="searappro" v-model="approcherch"  class="form-control" placeholder="recherch..." >
+                      
+                        <a  class="btn btn-success btn-sm">
+                            <i class="fa fa-search"></i> Recherch </a> 
+                    </form>
                 <div class="portlet box blue">
             <div class="portlet-title">
                 <div class="caption">
@@ -273,7 +280,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                            <tr v-for="approv in fou" :key="approv.id"  class="odd gradeX">
+                            <tr v-for="approv in fou" class="odd gradeX">
                            <td>
                                 <a href="/"> {{approv.id}} </a>
                             </td>
@@ -357,7 +364,7 @@
                     </thead>
                     <tbody>
                            
-                        <tr v-for="sound in rest" :key="sound.id"  class="odd gradeX">
+                        <tr v-for="sound in rest"   class="odd gradeX">
                       
                             <td>
                                 <a> {{sound.numfact}} </a>
@@ -442,7 +449,7 @@
                     </thead>
                     <tbody>
                            
-                        <tr v-for="produit in rupstock" :key="produit.id" class="odd gradeX">
+                        <tr v-for="produit in rupstock"  class="odd gradeX">
                             <td>
                                 <a href="#"> {{produit.id}} </a>
                             </td>

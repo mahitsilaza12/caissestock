@@ -126,30 +126,7 @@ const panier=async(req, res)=>{
     res.json(approfoulist)
  }
 const affichageappro = async (req, res) => {
-    // const approfournisseur = await Listeappro.findAll({
-    //     attributes: ['qt','id', 'condition'],
-    //     order: [
-    //         ['id', 'DESC']
-    //     ],
-    //     include: [{
-    //             association: "appro",
-    //             as: "appro",
-    //              include: [{
-    //                 association: "approfo",
-    //                 as: "approfo"
-    //             }]
-    //         },
-    //         {
-    //             association: "produit",
-    //             as: "produit",
-    //             include: [{
-    //                 association: "intrants",
-    //                 as: "intrants"
-    //             }]
-    //         }
-    //     ]
-    // });
-    // return res.json(approfournisseur);
+ 
   
     var sql=null
    
@@ -219,7 +196,27 @@ const addapprovisionnfinal =async(req,res)=>{
     }
 }
 
+const journalrecherchappro = async (req, res) => {
+ 
+    const {nom,name}=req.query
+    console.log(nom)
+        sql=" SELECT approfous.id,listeappros.qt,listeappros.condition, fournisseurs.name as fou,approfous.dateappro,produits.name,produits.puvente,produits.unite,intrants.name as category FROM listeappros, fournisseurs,approfous,produits,intrants where  fournisseurs.id=approfous.idfou AND listeappros.idappro=approfous.id AND produits.id= listeappros.idpro AND produits.idintrant = intrants.id AND intrants.name LIKE '"+nom+"%' OR produits.name LIKE '"+name+"%'"
+    try{
+        db.sequelize.query(
+            sql,
+             { type: sequelize.QueryTypes.SELECT}
+             )
+        .then((date) => {
+            return res.status(200).json({date})
+        }) 
+    }
+    catch (error) {
+        console.log(error.message);
+        return res.status(500).json({error:error.message})
+    }
+}
+
 module.exports={
    approv,panier,addfournisseur,delPanier,createAppro,affichageappro,datediff,
-   addapprovisionnfinal,getIdappro 
+   addapprovisionnfinal,getIdappro ,journalrecherchappro
 }

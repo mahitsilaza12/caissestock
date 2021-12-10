@@ -1,0 +1,6 @@
+SELECT modes.mode,listecomms.qt,listecomms.condition, clients.name as commande,commandeclis.datecom,produits.name,produits.pugros,produits.unite,produits.pudetail,intrants.name as category, fournisseurs.name as fou FROM listecomms, clients,commandeclis,produits,intrants,modes, listeappros, fournisseurs,approfous where  clients.id=commandeclis.idcli AND modes.id=commandeclis.idmode AND listecomms.idcomm=commandeclis.id AND produits.id= listecomms.idpro AND produits.idintrant = intrants.id AND fournisseurs.id=approfous.idfou AND listeappros.idappro=approfous.id AND produits.id= listeappros.idpro AND approfous.dateappro AND commandeclis.datecom BETWEEN '2020-10-10' AND '2021-12-12';
+
+
+
+requete historique apptovisionnement
+SELECT  payementfous.id, payee, datepayement, date_echeance, net, idprovision as numfact ,fournisseurs.name from approfous, fournisseurs, payementfous, listeappros WHERE approfous.idfou=fournisseurs.id AND approfous.id=listeappros.idappro AND listeappros.idappro=payementfous.idprovision GROUP BY numfact ORDER BY id DESC;

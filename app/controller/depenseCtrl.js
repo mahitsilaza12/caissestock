@@ -1,6 +1,8 @@
 const { Depense } = require('../models/index');
 const { Op } = require('sequelize');
 const sequelize = require("sequelize");
+
+const db =require("../models/index");
 const all= async(req, res)=>{
 try{
     const Depenses = await Depense.findAll();
@@ -95,7 +97,28 @@ const datediff= async(req, res)=>{
     }
 }
 
+const recherch= async(req, res)=>{
+    const {nom,description,id,motif,date,montant}=req.query
+    console.log(nom)
+    sql="SELECT id, name, description, motif,type, montant, datedepense FROM depenses where id LIKE '"+id+"%' or name LIKE '"+nom+"%' or  description LIKE '"+description+"%' or motif LIKE '"+motif+"%' or montant LIKE '"+montant+"%' or datedepense LIKE '"+date+"%'"
+    try{
+    
+        db.sequelize.query(
+            sql,
+             { type: sequelize.QueryTypes.SELECT}
+             )
+        .then((date) => {
+            return res.status(200).json({date})
+        }) 
+    }
+    catch (error) {
+        console.log(error.message);
+        return res.status(500).json({error:error.message})
+    }
+
+}
+
 module.exports={
     all
-    ,get,add,update,del,datediff
+    ,get,add,update,del,datediff,recherch
 }

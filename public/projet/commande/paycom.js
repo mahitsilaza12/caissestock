@@ -4,21 +4,22 @@ new Vue({
         idSuppre:"",
 
         // commande
-        listePanier : "/commandeliste",
-        website:'/payementclis/',
+        listePanier : "http://localhost:8091/commandeliste",
+        website:'http://localhost:8091/payementclis/',
 
         // payement
-        payerVola : "/commandepayement",
-        payee:"",
+        payerVola : "http://localhost:8091/commandepayement",
+        payee:null,
         net:0,
         dateEcheance:"",
-        datepayement:"",
-        listefarany:"/compay",
-        lastidcommande:"/idcommande",
+        datepayement:null,
+        listefarany:"http://localhost:8091/compay",
+        lastidcommande:"http://localhost:8091/idcommande",
         liste:{},
         total:"",
         vola:0,
         nety:0,
+        errors:[],
 
 
 
@@ -33,14 +34,35 @@ new Vue({
     //     }  
     },
     methods:{
+      
         async payer(){
-            let {id,remise} = await axios.get(this.lastidcommande).then(({data})=>data)
-            // console.log(id,remise)
-            axios.post(this.payerVola,{payee : this.payee , dateEcheance : this.dateEcheance, datepayement : this.datepayement , idcommande : id , remise,net: this.net}).then(()=>{
-                // alert("Paiement effectué")
-             axios.get(this.website).then(response => {this.liste = response.data})  
+            
+            if (this.payee && this.datepayement && this.dateEcheance ) {
+                let {id,remise} = await axios.get(this.lastidcommande).then(({data})=>data)
+                // console.log(id,remise)
+                axios.post(this.payerVola,{payee : this.payee , dateEcheance : this.dateEcheance, datepayement : this.datepayement , idcommande : id , remise,net: this.net}).then(()=>{
+                    // alert("Paiement effectué")
+                 axios.get(this.website).then(response => {this.liste = response.data})  
+    
+                })
+                window.location.replace("/historiquepayement")
+            }
+      
+            this.errors = [];
+      
+            if (!this.payee) {
+            this.errors["payee"] = "fenoina lay payement";
 
-            })
+            }
+            if (!this.datepayement) {
+            this.errors["datepayement"] = "date de payement";
+
+              }
+            if (!this.dateEcheance) {
+            this.errors["dateEcheance"] = "date de payement du reste";
+
+                }
+            e.preventDefault();
         },
         famerimbola(){
             this.vola =  parseInt(this.nety) - this.net 
@@ -65,6 +87,6 @@ new Vue({
         // axios.get(this.website).then(response=>{this.liste = response.data})
 
         // axios.get(this.listePanier).then(response=>console.log(response.data))
-
+ 
     }
 })

@@ -3,12 +3,31 @@ const {
     Payementcli
 } = require('../models/index');
 const { Commandecli } = require('../models/index');
+const { Listecomm } = require('../models/index');
 const db =require("../models/index");
 
 
 const { Op } = require('sequelize');
 const sequelize = require("sequelize");
 
+const fact = async(req, res)=>{
+    var sql=null
+    const {id}=req.params
+    sql="SELECT commandeclis.id,modes.mode,listecomms.qt,listecomms.condition, clients.name as cli,commandeclis.datecom,produits.name,produits.pugros,produits.unite,produits.pudetail,intrants.name as category FROM listecomms, clients,commandeclis,produits,intrants,modes where  clients.id=commandeclis.idcli AND modes.id=commandeclis.idmode AND listecomms.idcomm=commandeclis.id AND produits.id= listecomms.idpro AND produits.idintrant = intrants.id AND commandeclis.id='"+id+"'"
+try{
+   db.sequelize.query(
+       sql,
+        { type: sequelize.QueryTypes.SELECT}
+        )
+   .then((date) => {
+       return res.status(200).json({date})
+   }) 
+}
+catch (error) {
+   console.log(error.message);
+   return res.status(500).json({error:error.message})
+}
+}
 
 const all= async(req, res)=>{
     var sql=null
@@ -242,6 +261,6 @@ catch (error) {
 }
 module.exports={
     all,add,update,get,del,facture,datediff,
-    chart,compteur,reste
+    chart,compteur,reste,fact
     // ,get,add,update,del
 }

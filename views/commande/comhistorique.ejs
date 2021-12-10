@@ -91,19 +91,12 @@
                                 </td>
                                 <!-- <td> <span v-if="commande.condition == 1">{{commande.gros *commande.qt}}</span></td> -->
                                 <td> <span v-if="commande.condition == 0">{{commande.pudetail *commande.qt}}</span><span v-else>{{commande.pugros * commande.qt}}</span> Ar</td>
-    <!--                            
+    <!--                             -->
                                 <td>
-                                <a class="btn btn-sm blue" data-toggle="modal" href="#modification">regle
+                                <a class="btn btn-sm blue"  :href="'/factureapres/' +commande.id">Facturer
                                     <i class="fa fa-phone"></i>
                                 </a>
-                                </a>
-                                <a class="btn btn-sm red" data-toggle="modal" href="#suppre">Supprimer
-                                    <i class="icon-trash"></i>
-                                </a>
-                                <a class="btn btn-sm yellow" data-toggle="modal" href="#suppre">Voir
-                                    <i class="icon-check"></i>
-                                </a>
-                                </td> -->
+                                </td>
                             </tr>
                         </tbody>
                     </table>

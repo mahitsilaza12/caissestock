@@ -1,6 +1,7 @@
 {
   "name": "bool",
   "version": "1.0.0",
+  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -28,6 +29,7 @@
     "debug": "^4.3.1",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
+    "excel4node": "^1.7.2",
     "express": "^4.17.1",
     "express-myconnection": "^1.0.4",
     "express-router": "0.0.1",
@@ -74,14 +76,5 @@
     "nodemon": "^2.0.3",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mahitsilaza12/cvb.git"
-  },
-  "bugs": {
-    "url": "https://github.com/mahitsilaza12/cvb/issues"
-  },
-  "homepage": "https://github.com/mahitsilaza12/cvb#readme",
-  "description": ""
+  }
 }

@@ -36,12 +36,12 @@ app.use(express.json());
 
 app.use(cookieParser());
 app.use(session({
-    key:'user_sids',
+    key:'user_sides',
     secret:'somesecret',
     resave:false,
     saveUninitialized:false,
     cookie:{
-        expires:6000000000
+        expires:60000000
     }
 }))
 

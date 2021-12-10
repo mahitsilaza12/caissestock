@@ -1,25 +1,25 @@
 new Vue({
 	el:'#pro',
 	data:{
-		website:'/produits/',
+		website:'http://localhost:8091/produits/',
         liste:{},
-        intrantsite:'/intrants/',
+        intrantsite:'http://localhost:8091/intrants/',
         intrantliste:{},
-        idintrant:{},
-        name:"",
+        idintrant:null,
+        name:null,
         namee:"",
-        unite:"",
-        presentation:"",
-        parpresentation:"",
-        pugros:"",
-        pudetail:"",
+        unite:null,
+        presentation:null,
+        parpresentation:null,
+        pugros:null,
+        pudetail:null,
         puvente:"",
         dateperemption:"",
         tva:"",
         description:"",
-        nomIntrant:"",
+        errors:[],
         idSuppre:"",
-
+        nomIntrant:null,
         nameEdit:"",
         uniteEdit:"",
         presentationEdit:"",
@@ -33,10 +33,12 @@ new Vue({
         tvaEdit:"",
         descriptionEdit:'',
         idintrant:"",
+        errorCat:[],
+        testa:false,
         // class="label label-sm label-success"
 
         // search
-        websearch:'/chercproduits',
+        websearch:'http://localhost:8091/chercproduits',
         searchproduit:"",
         nom:"",
         intra:"",
@@ -47,12 +49,67 @@ new Vue({
         }  
     },
 	methods:{
+        addproduit: function (e) {
+            if (this.name && this.unite && this.presentation && this.parpresentation && this.pugros && this.pudetail && this.idintrant ) {
+                axios.post(this.website, {
+                    name: this.name,
+                    unite:this.unite,
+                    presentation:this.presentation,
+                    parpresentation:this.parpresentation,
+                    pugros:this.pugros,
+                    pudetail:this.pudetail,
+                    puvente:this.puvente,
+                    idintrant:this.idintrant,
+                    tva:this.tva,
+                    description:this.description,
+                    dateperemption:this.dateperemption})
+                     .then(()=>{
+                            axios.get(this.website).then(response=>{this.liste = response.data})
+                            // axios.get(this.website).then(({data}) => { this.liste = data.date}) 
+                     })
+                     this.testa=true
+                    
+            }
+      
+            this.errors = [];
+      
+            if (!this.name) {
+              this.errors["name"] = "Fenoina ilay anarany produit";
+
+            }
+            if (!this.unite) {
+              this.errors["unite"] = "Fenoina ilay unité";
+
+              }
+            if (!this.presentation) {
+            this.errors["presentation"] = "Fenoina ilay présentation";
+
+            }
+            if (!this.parpresentation) {
+            this.errors["parpresentation"] = "Fenoina ilay par présentation";
+
+            }
+            if (!this.pugros) {
+            this.errors["pugros"] = "Fenoina ilay prix de gros";
+
+            }
+            if (!this.pudetail) {
+            this.errors["pudetail"] = "Fenoina ilay prix detsil";
+
+            }
+            if (!this.idintrant) {
+            this.errors["idintrant"] = "Fenoina ilay categorie";
+
+            }
+            e.preventDefault();
+           
+          }
+        ,
         search(){
             if(this.searchproduit){
                 axios.get(this.websearch,{
                     params:{
                         nom:this.searchproduit,
-                        intra:this.searchproduit
                     }
                 }).then(({data}) => {
                     this.liste = data.date
@@ -63,24 +120,24 @@ new Vue({
           }
         }
         ,
-		 addproduit(){
-            axios.post(this.website, {
-                name: this.name,
-                unite:this.unite,
-                presentation:this.presentation,
-                parpresentation:this.parpresentation,
-                pugros:this.pugros,
-                pudetail:this.pudetail,
-                puvente:this.puvente,
-                idintrant:this.idintrant,
-                tva:this.tva,
-                description:this.description,
-                dateperemption:this.dateperemption})
-                 .then(()=>{
-                        axios.get(this.website).then(response=>{this.liste = response.data})
-                        // axios.get(this.website).then(({data}) => { this.liste = data.date}) 
-                 })
-        },
+		//  addproduit(){
+        //     axios.post(this.website, {
+        //         name: this.name,
+        //         unite:this.unite,
+        //         presentation:this.presentation,
+        //         parpresentation:this.parpresentation,
+        //         pugros:this.pugros,
+        //         pudetail:this.pudetail,
+        //         puvente:this.puvente,
+        //         idintrant:this.idintrant,
+        //         tva:this.tva,
+        //         description:this.description,
+        //         dateperemption:this.dateperemption})
+        //          .then(()=>{
+        //                 axios.get(this.website).then(response=>{this.liste = response.data})
+        //                 // axios.get(this.website).then(({data}) => { this.liste = data.date}) 
+        //          })
+        // },
         del(id){
         	this.idSuppre=id;
         },
@@ -113,13 +170,29 @@ new Vue({
                 // axios.get(this.website).then(({data}) => { this.liste = data.date}) 
             })
         },
-        addIntrant(){
-            axios.post(this.intrantsite , {name : this.nomIntrant}).then(() => {
+        // addIntrant(){
+        //     axios.post(this.intrantsite , {name : this.nomIntrant}).then(() => {
+        //         axios.get(this.website).then(response => {this.liste = response.data}) 
+                 
+        //         })
+               
+        //     },
+            addIntrant: function (e) {
+                if (this.nomIntrant ) {
+                      axios.post(this.intrantsite , {name : this.nomIntrant}).then(() => {
                 axios.get(this.website).then(response => {this.liste = response.data}) 
                  
                 })
+     }
+          
+                this.errorCat = [];
+          
+                if (!this.nomIntrant) {
+                  this.errorCat.push('fenoina ny categorie.');
+                }
+                e.preventDefault();
                
-            },
+              }
 
 	},
   mounted(){

@@ -3,33 +3,46 @@ new Vue({
 	data:{
 
 		// depense
-		website:'/depensedate/',
+		website:'http://localhost:8091/depensedate/',
 		liste:{},
 		debut:"",
 		fin:"",
 		
 		total:0,
 		//client commandee
-		webclient:'/datecomm/',
+		webclient:'http://localhost:8091/datecomm/',
 		cli:{},
 		deb:"",
 		fi:"",
 		tota:0,
 
 		//fournisseur approv
-		webfournisseur:'/dateappro/',
+		webfournisseur:'http://localhost:8091/dateappro/',
 		fou:{},
 		deba:"",
 		fille:"",
 		totaly:0,
 		to:0,
 
-		restpayee:'/rest/',
+		restpayee:'http://localhost:8091/rest/',
 		rest:{},
 		resta:0,
 
-		rupture:'/rupturestoky/',
+		rupture:'http://localhost:8091/rupturestoky/',
 		rupstock:{},
+		recherchedepense:'http://localhost:8091/depensesrecherch/',
+		affic:'http://localhost:8091/depenses',
+		searchproduit:"",
+		nom:'',
+		description:'',
+		motif:'',
+		date:'',
+		montant:'',
+
+		rechercheappro:'http://localhost:8091/jouranlrecherchapppro/',
+		rechercheapproapre:'http://localhost:8091/affichageappro/',
+		approcherch:"",
+		name:'',
 	
 
 	},
@@ -48,6 +61,47 @@ new Vue({
 		}
 	},
 	methods:{
+		searappro(){
+			if(this.approcherch){
+                axios.get(this.rechercheappro,{
+                    params:{
+                        nom:this.approcherch,
+                        name:this.approcherch,
+                    }
+                }).then(({data}) => {
+                    this.fou = data.date
+				
+                })
+            }else{
+                axios.get(this.rechercheapproapre).then(response => {this.fou = response.data})  
+                axios.get(this.rechercheapproapre).then(({data}) => { this.fou = data.date
+				console.log(this.fou = data.date)}) 
+          }
+		}
+		,
+		search(){
+            if(this.searchproduit){
+                axios.get(this.recherchedepense,{
+                    params:{
+                        nom:this.searchproduit,
+                        description:this.searchproduit,
+                        motif:this.searchproduit,
+                        date:this.searchproduit,
+                        montant:this.searchproduit,
+                    }
+                }).then(({data}) => {
+                    this.liste = data.date
+					this.total= this.liste[0].montant
+					for(let i = 1; i < this.liste.length; i++){
+						this.total += this.liste[i].montant
+					}
+                })
+            }else{
+                axios.get(this.affic).then(response => {this.liste = response.data})  
+                // axios.get(this.website).then(({data}) => { this.liste = data.date}) 
+          }
+        }
+		,
 			
 		depe(){
 	axios.get(this.website+this.debut+"/"+this.fin	).then(({data})=>{

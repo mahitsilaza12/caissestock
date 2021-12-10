@@ -141,31 +141,10 @@ const getIdCommande= async (req,res)=>{
 }
 
 const affichagecommande = async (req, res) => {
-    // const commandeclient = await Listecomm.findAll({
-    //     attributes: ['qt', 'condition'],
-    //     include: [{
-    //             association: "commmande",
-    //             as: "commmande",
-    //             include: [{
-    //                 association: "clients",
-    //                 as: "clients"
-    //             }]
-    //         },
-    //         {
-    //             association: "produits",
-    //             as: "produits",
-    //             include: [{
-    //                 association: "intrants",
-    //                 as: "intrants"
-    //             }]
-    //         }
-    //     ]
-    // });
-    // return res.json(commandeclient);
+ 
     var sql=null
  
     sql=" SELECT commandeclis.id,modes.mode,listecomms.qt,listecomms.condition, clients.name as cli,commandeclis.datecom,produits.name,produits.pugros,produits.unite,produits.pudetail,intrants.name as category FROM listecomms, clients,commandeclis,produits,intrants,modes where  clients.id=commandeclis.idcli AND modes.id=commandeclis.idmode AND listecomms.idcomm=commandeclis.id AND produits.id= listecomms.idpro AND produits.idintrant = intrants.id order by id DESC "
-
 try{
    db.sequelize.query(
        sql,
@@ -183,6 +162,32 @@ catch (error) {
 
 
 const datediff = async(req, res)=>{
+    const {deb , fi}=req.params
+    console.log(deb,fi)
+    var sql=null
+    if(deb==undefined && fi!==undefined){
+         sql=" SELECT commandeclis.id,modes.mode,listecomms.qt,listecomms.condition, clients.name as cli,commandeclis.datecom,produits.name,produits.pugros,produits.unite,produits.pudetail,intrants.name as category FROM listecomms, clients,commandeclis,produits,intrants,modes where  clients.id=commandeclis.idcli AND modes.id=commandeclis.idmode AND listecomms.idcomm=commandeclis.id AND produits.id= listecomms.idpro AND produits.idintrant = intrants.id AND commandeclis.datecom BETWEEN '"+deb+"' AND '"+fi+"'"
+    }else{
+        sql=" SELECT commandeclis.id,modes.mode,listecomms.qt,listecomms.condition, clients.name as cli,commandeclis.datecom,produits.name,produits.pugros,produits.unite,produits.pudetail,intrants.name as category FROM listecomms, clients,commandeclis,produits,intrants,modes where  clients.id=commandeclis.idcli AND modes.id=commandeclis.idmode AND listecomms.idcomm=commandeclis.id AND produits.id= listecomms.idpro AND produits.idintrant = intrants.id AND commandeclis.datecom BETWEEN '"+deb+"' AND '"+fi+"'"    
+    }
+    try{
+        db.sequelize.query(
+            sql,
+             { type: sequelize.QueryTypes.SELECT}
+             )
+        .then((date) => {
+            return res.status(200).json({date})
+        }) 
+    }
+    catch (error) {
+        console.log(error.message);
+        return res.status(500).json({error:error.message})
+    }
+
+    
+}
+
+const final = async(req, res)=>{
     const {deb , fi}=req.params
     console.log(deb,fi)
     var sql=null
@@ -307,6 +312,29 @@ const addpayement =async(req,res)=>{
      
 }
 
+const journalcherch = async(req, res)=>{
+    const {nom,name}=req.query
+    console.log(nom)
+    sql=" SELECT commandeclis.id,modes.mode,listecomms.qt,listecomms.condition, clients.name as cli,commandeclis.datecom,produits.name,produits.pugros,produits.unite,produits.pudetail,intrants.name as category FROM listecomms, clients,commandeclis,produits,intrants,modes where  clients.id=commandeclis.idcli AND modes.id=commandeclis.idmode AND listecomms.idcomm=commandeclis.id AND produits.id= listecomms.idpro AND produits.idintrant = intrants.id AND intrants.name LIKE '"+nom+"%' OR produits.name LIKE '"+name+"%'"    
+
+    try{
+    
+        db.sequelize.query(
+            sql,
+             { type: sequelize.QueryTypes.SELECT}
+             )
+        .then((date) => {
+            return res.status(200).json({date})
+        }) 
+    }
+    catch (error) {
+        console.log(error.message);
+        return res.status(500).json({error:error.message})
+    }
+
+    
+}
+
 module.exports = {
     createcommande,
     affichagecommande,
@@ -318,5 +346,7 @@ module.exports = {
     pay,
     addpayement,
     getIdCommande,
-    createcommandetsyfact
+    createcommandetsyfact,
+    final,
+    journalcherch
 }
